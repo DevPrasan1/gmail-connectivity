@@ -1,0 +1,20 @@
+{
+  "name": "gmail-connectivity",
+  "version": "1.0.0",
+  "description": "send message to user and get mail opened confirmation",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "nodemailer": "^4.0.1"
+  },
+  "engines": {
+    "node": "5.9.1"
+  }
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Our-Mailer</title>
+</head>
+<body ng-app="testApp">
+	<div ng-controller="MainCtrl as ctrl" align="center" style="margin-top: 10%">
+		<input type="text" ng-model="ctrl.mailId" placeholder="Enter email..">
+		<br>
+		<br>
+		<textarea ng-model="ctrl.mailText" placeholder="Write mail here......"></textarea>
+		<br>
+		<br>
+		<button ng-click="ctrl.sendMail()">Send</button>
+		<p style="color:red"> {{ ctrl.msg }}</p>
+		<table>
+				<tr>
+					<td style="border:solid">Email</td>
+					<td style="border:solid">Text</td>
+					<td style="border:solid">Sent At</td>
+					<td style="border:solid"	>Opened AT</td>
+				</tr> 
+			<tbody ng-repeat="(key,value) in ctrl.records">
+				<tr style="border:solid">
+					<td ng-bind="value.id" style="border:solid"> </td>
+					<td ng-bind="value.text" style="border:solid"></td>
+					<td ng-bind="value.sentTime" style="border:solid"></td>
+					<td ng-bind="value.openedTime" style="border:solid"></td>
+				</tr> 
+			</tbody>
+		</table>
+	</div>
+
+	<script type="text/javascript" src="/js/angular.js"></script>
+	<script type="text/javascript" src="/js/angular.min.js"></script>
+	<script type="text/javascript">
+		angular.module("testApp",[])
+			.controller('MainCtrl', ['$http', function($http) {
+				var self=this;
+				self.msg="";
+				self.mailId="prasandev14@gmail.com";
+				self.records={};
+
+				$http.get('/records').then(function(response) {
+				 self.records = response.data;
+				 console.log(response.data);
+				 }, function(errResponse) {
+				 console.error('Error while fetching records');
+				 });
+	
+				self.sendMail=function(){
+					if(self.mailId && self.mailText){
+						var obj={
+							"id":self.mailId,
+						  "text":self.mailText
+						};
+						console.log(obj);
+						$http.post('/send-mail', obj)
+						 .then(function(response) {
+						  self.msg="Mail Sent"; 
+						  self.mailId="";
+					      self.mailText="";
+						 })
+						 .then(function(err){
+						 	self.msg=err;
+						 });
+								
+					}
+					else{
+						self.msg="Please Enter both!";
+					}
+				};
+
+			}]);
+
+
+	</script>
+</body>
+</html>
