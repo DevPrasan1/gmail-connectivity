@@ -1,13 +1,24 @@
 {
   "name": "gmail-connectivity",
   "version": "1.0.0",
-  "description": "send message to user and get mail opened confirmation",
+  "description": "Mail Tracker",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
      "start": "node app.js"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DevPrasan1/gmail-connectivity.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mail-tracker"
+  ],
+  "author": "cruisecoder",
+  "license": "ISC",
+  "homepage": "https://mail-tracking.herokuapp.com/",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.2",
@@ -15,6 +26,6 @@
     "nodemailer": "^4.0.1"
   },
   "engines": {
-    "node": "5.9.1"
+    "node": "6.11.0"
   }
 }

@@ -24,6 +24,7 @@ const nodemailer = require('nodemailer');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
+
 var gmailInformation = {
     service: 'gmail',
     auth: {
@@ -68,13 +69,24 @@ app.get("/records",function(req,res){
 });
 
 app.get('/trackMail/:id', function (req, res) {
-   console.log("user tracked:",req.params.id);
+	var x=new Date();
+   console.log("user tracked:",req.params.id,x);
+   fs.readFile('./public/logo.png', function(error, img) 
+  {
+    if (error) 
+	{
+      throw error;
+    }
+    res.writeHead(200, {'Content-type': 'image/png'});
+    res.end(img);
+
+  });
 
 });
 
 app.post('/send-mail', function(req,res){
 	console.log(req.body);
-	var queryUrl="http://127.0.0.1:5000/trackMail/"+ req.body.id;
+	var queryUrl="https://mail-tracking.herokuapp.com/trackMail"+ req.body.id;
 	var transporter = nodemailer.createTransport(gmailInformation);
 	var mailOptions ={
 		from: 'devprasan4@gmail.com',
@@ -95,7 +107,28 @@ app.post('/send-mail', function(req,res){
 	    res.status(200).send();
 	});
 
-})
+});
+
+	var queryUrl="https://mail-tracking.herokuapp.com/trackMail/prasandev14@gmail";
+	var transporter = nodemailer.createTransport(gmailInformation);
+	var mailOptions ={
+		from: 'devprasan4@gmail.com',
+		to: "prasandev14@gmail.com", 
+		subject: 'Cruisecoder ✔', 
+		text: 'Hello world ?'
+		};
+	//https://firebasestorage.googleapis.com/v0/b/consicious-commerce.appspot.com/o/logo.png?alt=media&token=5ca9fa97-e19c-483f-8db6-c6bb6d0f41f3
+	mailOptions.html = "<h2>Hello</h2><p>Hello USER.</p><img src='"+ queryUrl +"'>";
+	transporter.sendMail(mailOptions, (error, info) =>{
+		console.log("inside");
+	    if (error) 
+	    {
+	        return console.log(error);
+	        res.send(400).send(error);
+	    }
+	    console.log('Message %s sent: %s', info.messageId, info.response);
+	    res.status(200).send();
+	});
 app.listen(5000);
 
 console.log("server running...........");
@@ -103,3 +136,4 @@ console.log("server running...........");
 
 
 
+//3003465 95 60.3 1/4/15
